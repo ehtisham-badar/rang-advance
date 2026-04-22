@@ -1,1 +1,188 @@
-NAME: RANG ADVANCE Interface and Rules of the Game 1) The interface will start with Choosing Player 1, Player 2, Player 3, Player 4 (if we can give names, better otherwise 1,2,3,4 will do). Players 1 and 3 will form a team and Players 2 and 4 will form another team. 2) Once the team is selected, there will be a toss mechanism where each player will start receiving random cards 1 by 1 (which all players can see) until there is an Ace on the Board. That player will win the toss and will decide who will be the batter to keep the hidden card first. He can just click on the player (it can be from his team or opponent team). 3) The player with the hidden card will be hereof, referred to as the Batter and his team will be referred to as the batting team. Whereas the other team is referred to as the bowling team. 4) To start the game all players will be dealt 13 cards starting from batter, one card for that player will be hidden from all 4 players including himself (preferably the third card he receives randomly). Each player can only see their card only.  5) All players except the batter will have an option to ask for a reshuffle if he doesn’t possess any of the King, Queen or Jack cards. 6) However, all the players can take any kind of action only on their turn. Including asking for reshuffle, declaring the game open/double-open (explained below). 7) If any of the actions are taken above, the round will virtually start again with the player who activated the special mode will throw the first card. Incase of Reshuffle the game will reshuffle again to the same batter.  8) The hidden card will be later used to unveil the trump suit. 9) The trump suit can be used when a player don’t have the suit where the turn is started. And if he uses trump suit it will be his turn or other player with a more senior trump suit. 10) The card seniority level will be (Ace, King, Queen, jack, and numbers from 10 to 2) Rounds, turns & game 1) Each Player will have their turn to Bat from anticlockwise from the first Batter. 2) Each Batter will play for three rounds. 3) If the bowling team declare the open, The round will not count, The bowling team can only activate open on three occasions per individual batter. 4) So the maximum possibility of games happening for one batter is 6 with 3 games compulsory. 5) Points System is explained below. 6) After all 4 players have batted, The Difference between the total of both teams, positive to whichever team will win the game and game will start again. Points system 1) If the batting team win the round, they will score 13 points. 2) If the bowling team wins the round, they will score 26 points 3) If the person who activated the open mode wins he will get 24 points 4) If the person who activated the open mode loses, the other team will get 48 points 5) If the Person who activated the double-open mode wins will get 48 points 6) If the person who activated the double-open mode loses the other team will get 96 points Gameplay 1) Batter will start the turn from whichever card he wants to throw. And whoever throws the most senior card of the same suit will have the next turn. You can only throw the same suit card of which the turn is started. 2) If for example batting team cannot throw the same suit card, they can choose to throw any card randomly during a turn. However the batter’s unsuited cards will be stay hidden until the trump suit is unveiled. 3) The game will continue like that until a player from bowling team doesn’t have the same suit of which the turn starts. When this happens, the hidden card will be shown to all players - on the turn of the player that doesn’t have the same suit. The hidden card will be then returned to its owner i.e the batter (before that batter will be playing with 12 cards and one facedown card on the side of the interface).  4) That hidden card along with all other remaining cards of that suit will become trump cards. Immediately as it is unveiled 5) The game will continue in the same fashion for 13 turns unless one player from the bowling team win two consecutive turns. The bowling team will win the round on the spot and will be awarded the winning points. However, if they use two aces consecutively the game will continue even if two consecutive turns are secured.  6) If any player from the bowling team is not able to win two consecutive turns until the 13th turn, then in that scenario the batting team will win the round.  Special Mode – Open/Double-open Declaration 1) In only the first turn, after the round is started by the batter – each player for except the batter will have an extra option to declare the game as to be played in Open Mode. 2) Once any player has declared the game as open, then any player of the opponent team (including the batter) will be able to declare the game as Double Open.  3) It should be noted that these declarations can only be made before the completion of the first turn and all the players can exercise this declaration only on their respective turns. 4) The said player will choose and announce the trump suit of their choice while declaring the game as open/double-open. 5) 6) batter. 7) The round restarts once any player has declared the game as Open. The hidden card will thus become ineffective and will be returned to the In the first turn of the Open game, the opponent team will have the option to declare the game as Double-open. Declaring his own trump suit. Thus restarting the round. 8) 9) No more declarations can be mode further. And the game continues. The player declaring the trump suit will thus become the alpha player for the round. Gameplay of Special Modes 1) The game will be played in the similar fashion as the normal game with the  Alpha player will start the round with throw any suit card of his choice. 2) The opponent team thus have to win two consecutive rounds (excluding the first turn). Thus being senior for two consecutive turns in the turn 2-13th – without using Aces in consecutive turns. 3) If the opponent team is not able to be senior for two consecutive turns until the last turn. The team with the alpha player will be declared winner. 
+# RANG ADVANCE – Interface and Rules of the Game
+
+## 1. Interface Setup
+- The interface begins with selecting:
+  - Player 1
+  - Player 2
+  - Player 3
+  - Player 4  
+- Players 1 & 3 form a team  
+- Players 2 & 4 form another team  
+
+---
+
+## 2. Toss Mechanism
+- Cards are dealt one-by-one (visible to all players)
+- The first player to receive an **Ace** wins the toss
+- The winner chooses the **Batter** (any player from either team)
+
+---
+
+## 3. Terminology
+- **Batter**: Player with the hidden card  
+- **Batting Team**: Batter’s team  
+- **Bowling Team**: Opponent team  
+
+---
+
+## 4. Card Distribution
+- Each player gets **13 cards**
+- One card of the batter is hidden (preferably the 3rd card)
+- Each player can only see their own cards  
+
+---
+
+## 5. Reshuffle Rule
+- Any player (except batter) can request reshuffle if they don’t have:
+  - King, Queen, or Jack  
+- Actions can only be taken on a player's turn  
+
+---
+
+## 6. Special Actions
+- Actions include:
+  - Reshuffle
+  - Declare Open / Double Open  
+- If triggered:
+  - Round restarts
+  - Action player starts first  
+
+---
+
+## 7. Hidden Card & Trump Suit
+- Hidden card later determines **trump suit**
+- Trump can be used if a player lacks the starting suit  
+
+---
+
+## 8. Card Ranking
+**Ace > King > Queen > Jack > 10 → 2**
+
+---
+
+# Rounds, Turns & Game Flow
+
+## 1. Turn Order
+- Turns proceed **anticlockwise**
+- Each player bats for **3 rounds**
+
+---
+
+## 2. Open Rule
+- Bowling team can declare **Open**
+- Open rounds don’t count
+- Max **3 Open declarations per batter**
+
+---
+
+## 3. Total Games
+- Maximum: **6 rounds per batter**
+- Minimum: **3 rounds compulsory**
+
+---
+
+## 4. Winning
+- After all players bat:
+  - Compare total scores
+  - Higher score wins
+  - New game begins  
+
+---
+
+# Points System
+
+| Scenario | Points |
+|--------|--------|
+| Batting team wins | 13 |
+| Bowling team wins | 26 |
+| Open mode win | 24 |
+| Open mode loss | 48 (to opponent) |
+| Double Open win | 48 |
+| Double Open loss | 96 (to opponent) |
+
+---
+
+# Gameplay Rules
+
+## 1. Playing Cards
+- Batter starts with any card
+- Players must follow same suit
+- Highest card of same suit wins turn
+
+---
+
+## 2. If Suit Not Available
+- Player can throw any card
+- Batter’s off-suit cards remain hidden until trump reveal  
+
+---
+
+## 3. Trump Reveal
+- Trigger: When a bowling player cannot follow suit  
+- Hidden card is revealed:
+  - Becomes trump suit
+  - Returned to batter  
+
+---
+
+## 4. Round Ending
+- Bowling team wins instantly if:
+  - They win **2 consecutive turns**
+  - Exception: consecutive Aces don’t count  
+
+- If not:
+  - Batting team wins after 13 turns  
+
+---
+
+# Special Mode – Open / Double Open
+
+## 1. Open Declaration
+- Can only be declared:
+  - In first turn
+  - By non-batter players  
+
+---
+
+## 2. Double Open
+- Opponent team can declare Double Open
+- Must be within first turn  
+
+---
+
+## 3. Trump Selection
+- Player declaring Open/Double Open selects trump suit  
+
+---
+
+## 4. Round Restart
+- On declaration:
+  - Round restarts
+  - Hidden card becomes irrelevant  
+
+---
+
+## 5. Alpha Player
+- Player who declares trump becomes **Alpha Player**
+
+---
+
+# Gameplay in Special Mode
+
+## 1. Start
+- Alpha player starts with any suit  
+
+---
+
+## 2. Winning Condition
+- Opponent must:
+  - Win **2 consecutive turns (Turn 2–13)**
+  - Cannot use consecutive Aces  
+
+---
+
+## 3. Final Result
+- If opponent fails:
+  - Alpha player’s team wins  
+
+---
