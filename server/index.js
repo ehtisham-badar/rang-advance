@@ -21,9 +21,11 @@ const io = new Server(httpServer, {
 io.on('connection', (socket) => {
     registerSocketHandlers(io, socket);
 });
+app.get('/', (req, res) => res.send('Server is running'));
 
 httpServer.listen(PORT, () => {
     const address = httpServer.address();
     const actualPort = address && typeof address === 'object' ? address.port : PORT;
     console.log(`Rang Advance server listening on ${actualPort}`);
 });
+
