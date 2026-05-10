@@ -20,6 +20,7 @@
     "is-fullwidth-code-point": "^3.0.0",
     "require-directory": "^2.1.1",
     "rxjs": "^7.8.2",
+    "serve": "^14.2.6",
     "shell-quote": "^1.8.3",
     "string-width": "^4.2.3",
     "strip-ansi": "^6.0.1",
@@ -31,7 +32,12 @@
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
   },
+
   "scripts": {
+    "client-install": "npm install --prefix client",
+    "server-install": "npm install --prefix server",
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "start": "node server/index.js",
     "postinstall": "npm install --prefix server && npm install --prefix client",
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\""
   },
