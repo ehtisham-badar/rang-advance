@@ -159,12 +159,18 @@ describe('socketHandlers trump reveal timing', () => {
         }));
 
         sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
+        expect(room.trumpRevealed).toBe(false);
+        expect(room.trumpRevealedThisTrick).toBe(false);
+
+        sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-13' });
+        expect(room.trumpRevealed).toBe(false);
+        expect(room.trumpRevealedThisTrick).toBe(false);
+
+        sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
         expect(room.trumpRevealed).toBe(true);
         expect(room.trumpRevealedThisTrick).toBe(true);
 
         sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-D-2' });
-        sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
-        sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-13' });
 
         expect(room.currentTurn).toBe(5);
         expect(room.currentPlayerIndex).toBe(1);
@@ -173,9 +179,9 @@ describe('socketHandlers trump reveal timing', () => {
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(0);
 
         sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-C-14' });
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-10' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-6' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-C-8' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-6' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-10' });
 
         expect(room.phase).toBe('playing');
         expect(room.currentTurn).toBe(6);
@@ -185,9 +191,9 @@ describe('socketHandlers trump reveal timing', () => {
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(0);
 
         sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-C-13' });
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-9' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-5' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-C-7' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-5' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-9' });
 
         expect(room.phase).toBe('round_end');
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(1);
@@ -254,12 +260,18 @@ describe('socketHandlers trump reveal timing', () => {
         }));
 
         sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
+        expect(room.trumpRevealed).toBe(false);
+        expect(room.trumpRevealedThisTrick).toBe(false);
+
+        sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-13' });
+        expect(room.trumpRevealed).toBe(false);
+        expect(room.trumpRevealedThisTrick).toBe(false);
+
+        sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
         expect(room.trumpRevealed).toBe(true);
         expect(room.trumpRevealedThisTrick).toBe(true);
 
         sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-D-2' });
-        sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
-        sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-13' });
 
         expect(room.currentTurn).toBe(5);
         expect(room.currentPlayerIndex).toBe(1);
@@ -268,9 +280,9 @@ describe('socketHandlers trump reveal timing', () => {
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(0);
 
         sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-C-13' });
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-10' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-6' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-C-8' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-6' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-C-10' });
 
         expect(room.phase).toBe('playing');
         expect(room.currentTurn).toBe(6);
@@ -338,9 +350,9 @@ describe('socketHandlers trump reveal timing', () => {
         }));
 
         sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-14' });
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-S-12' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-S-12' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
 
         expect(room.currentTurn).toBe(7);
         expect(room.currentPlayerIndex).toBe(1);
@@ -353,14 +365,14 @@ describe('socketHandlers trump reveal timing', () => {
 
         expect(room.phase).toBe('playing');
         expect(room.activeSuit).toBe('S');
-        expect(room.currentPlayerIndex).toBe(0);
+        expect(room.currentPlayerIndex).toBe(2);
         expect(room.trickCards.filter((slot) => slot.card)).toHaveLength(1);
         expect(io.emitted.filter((e) => e.event === 'trick_result')).toHaveLength(4);
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(0);
 
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-D-10' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-8' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-D-9' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-C-8' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-D-10' });
 
         expect(room.phase).toBe('round_end');
         expect(io.emitted.filter((e) => e.event === 'round_result')).toHaveLength(1);
@@ -414,9 +426,9 @@ describe('socketHandlers trump reveal timing', () => {
         }));
 
         sockets[1].getHandler('play_card')({ roomCode, cardId: 'P1-S-14' });
-        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
-        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-S-12' });
         sockets[2].getHandler('play_card')({ roomCode, cardId: 'P2-S-11' });
+        sockets[3].getHandler('play_card')({ roomCode, cardId: 'P3-S-12' });
+        sockets[0].getHandler('play_card')({ roomCode, cardId: 'P0-S-10' });
 
         const roundResults = io.emitted.filter((e) => e.event === 'round_result');
         expect(roundResults).toHaveLength(1);

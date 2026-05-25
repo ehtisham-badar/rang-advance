@@ -243,7 +243,7 @@ function dealForRound(room) {
     room.deck = shuffle(createDeck());
     for (const p of room.players) p.hand = [];
 
-    // Deal 13 each, starting from batter clockwise.
+    // Deal 13 each, starting from batter in the configured table order.
     const start = room.currentBatterIndex;
     for (let dealt = 0; dealt < 13 * 4; dealt += 1) {
         const seat = (start + (dealt % 4)) % 4;
@@ -645,8 +645,8 @@ function registerSocketHandlers(io, socket) {
         classifyPlayedCard(room, slot);
         const playedCardsInTrick = room.trickCards.filter((t) => t.card).length;
 
-        // Advance to next seat within the trick
-        room.currentPlayerIndex = (room.currentPlayerIndex + 3) % 4;
+        // Advance to next seat within the trick.
+        room.currentPlayerIndex = (room.currentPlayerIndex + 1) % 4;
 
         const nextPlayer = room.players[room.currentPlayerIndex];
         if (playedCardsInTrick < 4 && !room.trumpRevealed && room.activeSuit && nextPlayer) {

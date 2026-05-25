@@ -224,7 +224,7 @@ function computeBatterRotationOrder(initialBatterIndex) {
     const order = [initialBatterIndex];
     let cur = initialBatterIndex;
     for (let i = 1; i < 4; ++i) {
-        cur = (cur + 3) % 4;
+        cur = (cur + 1) % 4;
         order.push(cur);
     }
     return order;

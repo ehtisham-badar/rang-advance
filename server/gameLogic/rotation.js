@@ -1,5 +1,5 @@
 function getNextBatterIndex(currentIndex) {
-    return (currentIndex + 3) % 4;
+    return (currentIndex + 1) % 4;
 }
 
 function isGameOver(room) {
