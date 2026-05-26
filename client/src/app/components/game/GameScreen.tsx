@@ -159,19 +159,19 @@ export function GameScreen() {
     : null;
 
   return (
-    <div className="h-screen bg-gradient-to-br from-green-950 via-green-900 to-emerald-950 flex flex-col overflow-hidden relative">
+    <div className="h-[100dvh] bg-gradient-to-br from-green-950 via-green-900 to-emerald-950 flex flex-col overflow-hidden relative">
 
       {/* ── Top Bar ─────────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-4 py-2 bg-black/30 border-b border-gray-800 flex-shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 px-2 py-2 sm:px-4 bg-black/30 border-b border-gray-800 flex-shrink-0">
         {/* Scores */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <ScoreItem label="Team 1" score={totalScores[0]} color="text-blue-400" />
           <span className="text-gray-600">vs</span>
           <ScoreItem label="Team 2" score={totalScores[1]} color="text-orange-400" />
         </div>
 
         {/* Round info */}
-        <div className="flex items-center gap-3 text-xs text-gray-400">
+        <div className="order-3 flex w-full items-center justify-center gap-2 text-[11px] text-gray-400 sm:order-none sm:w-auto sm:gap-3 sm:text-xs">
           <span>Round {currentRound}</span>
           <span className="text-gray-600">•</span>
           <span>Turn {currentTurn}</span>
@@ -201,10 +201,10 @@ export function GameScreen() {
         <RevealedTrumpCardOverlay card={revealedTrumpCard} />
       )}
 
-      <div className="flex-1 relative flex flex-col min-h-0">
+      <div className="flex-1 relative flex flex-col min-h-0 overflow-hidden">
 
         {/* Top player */}
-        <div className="flex justify-center pt-3 flex-shrink-0">
+        <div className="flex justify-center pt-1.5 sm:pt-3 flex-shrink-0">
           {topPlayer && (
             <OpponentPanel
               player={topPlayer}
@@ -217,9 +217,9 @@ export function GameScreen() {
         </div>
 
         {/* Middle row: left + center + right */}
-        <div className="flex-1 flex items-center justify-between px-3 min-h-0">
+        <div className="flex-1 grid grid-cols-[3.75rem_minmax(8.5rem,1fr)_3.75rem] items-center gap-1 px-1 min-h-0 sm:grid-cols-[minmax(5rem,1fr)_minmax(13rem,1.3fr)_minmax(5rem,1fr)] sm:gap-3 sm:px-3">
           {/* Left player */}
-          <div className="flex-shrink-0">
+          <div className="min-w-0 flex justify-start">
             {leftPlayer && (
               <OpponentPanel
                 player={leftPlayer}
@@ -232,8 +232,8 @@ export function GameScreen() {
           </div>
 
           {/* Center: Trick area */}
-          <div className="flex-1 flex flex-col items-center justify-center px-4 gap-3">
-            <div className="mb-16">
+          <div className="min-w-0 flex flex-col items-center justify-center gap-1 px-0 sm:gap-3 sm:px-4">
+            <div className="mb-1 sm:mb-16 max-w-full">
               <HiddenPileArea cards={hiddenPile} revealed={trumpRevealed} />
             </div>
             <TrickArea
@@ -246,7 +246,7 @@ export function GameScreen() {
           </div>
 
           {/* Right player */}
-          <div className="flex-shrink-0">
+          <div className="min-w-0 flex justify-end">
             {rightPlayer && (
               <OpponentPanel
                 player={rightPlayer}
@@ -260,14 +260,14 @@ export function GameScreen() {
         </div>
 
         {/* My player label + hidden-card badge (visible when I am the batter) */}
-        <div className="flex justify-center flex-shrink-0 pb-1 gap-2 items-center">
+        <div className="flex justify-center flex-shrink-0 pb-1 gap-2 items-center px-2">
           {me && (
             <div className={`
-              flex items-center gap-2 px-3 py-1.5 rounded-full text-xs
+              flex min-w-0 items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] sm:gap-2 sm:px-3 sm:text-xs
               ${isMyTurn ? "bg-yellow-900/60 border border-yellow-600 text-yellow-300" : "bg-gray-900/60 border border-gray-700 text-gray-400"}
             `}>
               <span className={`w-1.5 h-1.5 rounded-full ${me.connected ? "bg-green-400" : "bg-red-400"}`} />
-              <span>{me.name} (You)</span>
+              <span className="truncate max-w-[8rem] sm:max-w-none">{me.name} (You)</span>
               {isMyTurn && <span>• Your Turn!</span>}
             </div>
           )}
@@ -446,13 +446,13 @@ export function GameScreen() {
 
 function RevealedTrumpCardOverlay({ card }: { card: Card }) {
   return (
-    <div className="absolute top-14 right-4 z-20 pointer-events-none">
-      <div className="flex items-center gap-3 rounded-lg border border-amber-500/60 bg-gray-950/90 px-3 py-2 shadow-2xl">
+    <div className="absolute left-1/2 top-[4.75rem] z-30 -translate-x-1/2 pointer-events-none sm:left-auto sm:right-4 sm:top-14 sm:translate-x-0">
+      <div className="flex max-w-[calc(100vw-1rem)] items-center gap-2 rounded-lg border border-amber-500/60 bg-gray-950/95 px-2 py-1.5 shadow-2xl sm:gap-3 sm:px-3 sm:py-2">
         <div className="text-right">
-          <p className="text-[10px] uppercase tracking-[0.18em] text-amber-300">
+          <p className="text-[9px] uppercase tracking-[0.14em] text-amber-300 sm:text-[10px] sm:tracking-[0.18em]">
             Hidden trump
           </p>
-          <p className="text-xs text-gray-300">Revealed card</p>
+          <p className="text-[11px] text-gray-300 sm:text-xs">Revealed card</p>
         </div>
         <PlayingCard card={card} size="sm" className="shadow-lg" />
       </div>
@@ -482,8 +482,8 @@ function MyHand({
   }
 
   return (
-    <div className="flex justify-center px-2 overflow-x-auto pb-1">
-      <div className="flex gap-1 flex-wrap justify-center max-w-full">
+    <div className="flex justify-start px-2 overflow-x-auto pb-1 sm:justify-center">
+      <div className="flex w-max max-w-none flex-nowrap justify-start gap-1 sm:max-w-full sm:flex-wrap sm:justify-center">
         {hand.map((card) => {
           const playable = isCardPlayable(card);
           const selected = selectedCardId === card.id;
@@ -533,7 +533,7 @@ function TrickArea({
     const waiting = currentPlayerIndex === playerIndex && !slot?.card;
 
     return (
-      <div className={`flex flex-col items-center gap-1`}>
+      <div className="flex min-w-0 flex-col items-center gap-1">
         {slot?.card && !slot.hidden && !slot.dead ? (
           <PlayingCard card={slot.card} size="sm" />
         ) : slot?.hidden ? (
@@ -546,7 +546,7 @@ function TrickArea({
             {waiting && <span className="text-yellow-600 text-xs">?</span>}
           </div>
         )}
-        <span className="text-gray-500 text-xs truncate max-w-[60px] text-center">{label}</span>
+        <span className="max-w-[44px] truncate text-center text-[11px] text-gray-500 sm:max-w-[60px] sm:text-xs">{label}</span>
       </div>
     );
   };
@@ -558,10 +558,10 @@ function TrickArea({
   const wastedCards = trickCards.filter((slot) => slot?.card && slot?.dead);
 
   return (
-    <div className="relative flex flex-col items-center gap-2 w-56">
+    <div className="relative flex w-[8.5rem] flex-col items-center gap-1 sm:w-56 sm:gap-2">
       {/* Active suit indicator */}
       {activeSuit && (
-        <div className={`absolute -top-6 text-xs px-2 py-0.5 rounded ${isRedSuit(activeSuit) ? "bg-red-900/50 text-red-400" : "bg-gray-800 text-gray-400"}`}>
+        <div className={`absolute -top-5 rounded px-1.5 py-0.5 text-[11px] sm:-top-6 sm:px-2 sm:text-xs ${isRedSuit(activeSuit) ? "bg-red-900/50 text-red-400" : "bg-gray-800 text-gray-400"}`}>
           Active: {getSuitSymbol(activeSuit)}
         </div>
       )}
@@ -570,10 +570,10 @@ function TrickArea({
       <div>{renderSlot(topIdx, topPlayer?.name ?? `P${topIdx + 1}`)}</div>
 
       {/* Middle row */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-1.5 sm:gap-4">
         <div>{renderSlot(leftIdx, leftPlayer?.name ?? `P${leftIdx + 1}`)}</div>
         {/* Center diamond */}
-        <div className="w-8 h-8 rounded-full bg-green-800/50 border border-green-700/50 flex items-center justify-center">
+        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-green-800/50 border border-green-700/50 flex items-center justify-center">
           <span className="text-green-600 text-xs">🂠</span>
         </div>
         <div>{renderSlot(rightIdx, rightPlayer?.name ?? `P${rightIdx + 1}`)}</div>
@@ -591,11 +591,11 @@ function WastedCardsArea({ cards }: { cards: Card[] }) {
   if (!cards.length) return null;
 
   return (
-    <div className="mt-1 flex flex-col items-center gap-1">
+    <div className="mt-1 flex max-w-[8.5rem] flex-col items-center gap-1 overflow-hidden sm:max-w-full">
       <div className="text-[10px] uppercase tracking-[0.22em] text-gray-500">
         Wasted
       </div>
-      <div className="flex items-center justify-center gap-1">
+      <div className="flex max-w-full items-center justify-start gap-1 overflow-x-auto sm:justify-center">
         {cards.map((card) => (
           <div key={card.id} className="opacity-55 grayscale">
             <PlayingCard card={card} size="sm" />
@@ -618,12 +618,12 @@ function HiddenPileArea({
   const visibleCards = cards.slice(-6);
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="text-[10px] uppercase tracking-[0.3em] text-amber-300/80">
+    <div className="flex max-w-full flex-col items-center gap-1 sm:gap-2">
+      <div className="text-[9px] uppercase tracking-[0.22em] text-amber-300/80 sm:text-[10px] sm:tracking-[0.3em]">
         Hidden pile
       </div>
-      <div className="flex items-center justify-center min-h-16 px-2">
-        <div className="relative flex items-center justify-center" style={{ width: `${Math.max(visibleCards.length, 1) * 18 + 56}px`, height: "64px" }}>
+      <div className="flex items-center justify-center min-h-14 max-w-full px-0 sm:min-h-16 sm:px-2">
+        <div className="relative flex items-center justify-center" style={{ width: `${Math.max(visibleCards.length, 1) * 18 + 56}px`, maxWidth: "100%", height: "64px" }}>
           {visibleCards.map((card, index) => {
             const offset = index - (visibleCards.length - 1) / 2;
             return (
@@ -669,37 +669,40 @@ function OpponentPanel({
   showHiddenCard?: boolean;
 }) {
   const handSize = player.handSize ?? 0;
+  const isSidePanel = position === "left" || position === "right";
 
   return (
     <div className={`
-      flex gap-1.5 items-center rounded-xl px-2 py-1.5
-      border transition-all
+      flex max-w-full items-center rounded-lg border transition-all sm:rounded-xl
+      ${isSidePanel
+        ? "w-14 flex-col gap-1 px-1 py-1 sm:w-20 sm:gap-1.5 sm:px-2 sm:py-1.5"
+        : "max-w-[9rem] gap-1.5 px-2 py-1.5"
+      }
       ${isCurrentTurn
         ? "border-yellow-600/60 bg-yellow-900/20"
         : "border-gray-700/40 bg-gray-900/30"
       }
-      ${position === "left" || position === "right" ? "flex-col" : ""}
     `}>
-      <div className="flex items-center gap-1">
+      <div className="flex min-w-0 items-center gap-1">
         <div className={`w-1.5 h-1.5 rounded-full ${player.connected ? "bg-green-400" : "bg-red-400"}`} />
-        <span className={`text-xs truncate max-w-[80px] ${isCurrentTurn ? "text-yellow-300" : "text-gray-300"}`}>
+        <span className={`truncate text-[11px] sm:text-xs ${isSidePanel ? "max-w-[2.5rem] sm:max-w-[4rem]" : "max-w-[6rem]"} ${isCurrentTurn ? "text-yellow-300" : "text-gray-300"}`}>
           {player.name}
         </span>
         {isCurrentTurn && <span className="text-yellow-400 text-xs">●</span>}
       </div>
-      <div className="flex items-center gap-1">
-        <span className={`text-xs ${player.teamIndex === 0 ? "text-blue-400" : "text-orange-400"}`}>
+      <div className="flex items-center gap-0.5 sm:gap-1">
+        <span className={`text-[11px] sm:text-xs ${player.teamIndex === 0 ? "text-blue-400" : "text-orange-400"}`}>
           T{player.teamIndex + 1}
         </span>
         {handSize > 0 && (
-          <span className="text-gray-600 text-xs">· {handSize}🃏</span>
+          <span className="text-[11px] text-gray-600 sm:text-xs">· {handSize}🃏</span>
         )}
       </div>
       {/* Face-down hidden card badge — all players can see the batter has a hidden card */}
       {showHiddenCard && (
         <div className="flex flex-col items-center gap-0.5 mt-0.5">
           <CardBack size="sm" />
-          <span className="text-xs text-amber-400">Hidden</span>
+          <span className="text-[11px] text-amber-400 sm:text-xs">Hidden</span>
         </div>
       )}
     </div>
