@@ -291,7 +291,6 @@ function canReshufflePlayer(player, room) {
         if (player.playerIndex !== room.currentPlayerIndex) return { ok: false, code: 'WRONG_TURN' };
     }
     if (!isReshuffleWindowOpen(room)) return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
-    if (room.openMode || room.doubleOpenMode) return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
     const slot = room.trickCards.find((t) => t.playerId === player.id);
     if (slot && slot.card) return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
     return { ok: true };

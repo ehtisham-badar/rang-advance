@@ -142,6 +142,55 @@ describe('request_reshuffle turn enforcement', () => {
         expect(errorEmits).toEqual([]);
     });
 
+    test.each([
+        ['open mode', { openMode: true, doubleOpenMode: false }],
+        ['double-open mode', { openMode: false, doubleOpenMode: true }],
+    ])('allows reshuffle when it is your turn during %s', (_modeLabel, modeState) => {
+        const io = createMockIo();
+
+        const hostSocketId = 's-host';
+        const { roomCode } = createRoom('Host', hostSocketId);
+        const room = getRoom(roomCode);
+        expect(room).toBeTruthy();
+
+        const p2SocketId = 's-p2';
+        const j2 = joinRoom(roomCode, 'P2', p2SocketId, null);
+        expect(j2.errorCode).toBeUndefined();
+
+        const j3 = joinRoom(roomCode, 'P3', 's-p3', null);
+        expect(j3.errorCode).toBeUndefined();
+
+        const j4 = joinRoom(roomCode, 'P4', 's-p4', null);
+        expect(j4.errorCode).toBeUndefined();
+
+        room.phase = 'open_window';
+        room.currentTurn = 1;
+        room.currentBatterIndex = 0;
+        room.currentPlayerIndex = 1;
+        room.openMode = modeState.openMode;
+        room.doubleOpenMode = modeState.doubleOpenMode;
+        room.activeSuit = null;
+        room.trickCards = room.players.map((p) => ({ playerId: p.id, card: null, hidden: false }));
+
+        const p2 = room.players.find((p) => p.name === 'P2');
+        p2.hand = [
+            { suit: 'H', value: 2, id: 'H-2' },
+            { suit: 'D', value: 3, id: 'D-3' },
+            { suit: 'S', value: 10, id: 'S-10' },
+        ];
+
+        const socket = createMockSocket(p2SocketId);
+        registerSocketHandlers(io, socket);
+
+        const handler = socket.getHandler('request_reshuffle');
+        expect(typeof handler).toBe('function');
+
+        handler({ roomCode });
+
+        const errorEmits = socket.getEmitted().filter((e) => e.event === 'error');
+        expect(errorEmits).toEqual([]);
+    });
+
     test('allows reshuffle with an Ace when player has no J, Q, or K', () => {
         const io = createMockIo();
 

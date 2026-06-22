@@ -79,8 +79,8 @@ function scoresToTuple(scores: any): [number, number] {
   return [0, 0];
 }
 
-function sortHand(cards: Card[]): Card[] {
-  const suitOrder: Record<Suit, number> = { H: 0, D: 1, C: 2, S: 3 };
+export function sortHand(cards: Card[]): Card[] {
+  const suitOrder: Record<Suit, number> = { H: 0, C: 1, D: 2, S: 3 };
   return [...cards].sort((left, right) => {
     const suitDelta = suitOrder[left.suit] - suitOrder[right.suit];
     if (suitDelta !== 0) return suitDelta;

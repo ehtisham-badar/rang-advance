@@ -6,6 +6,7 @@ function createDeck() {
             deck.push({ suit, value, id: `${suit}-${value}` });
         }
     }
+
     return deck;
 }
 

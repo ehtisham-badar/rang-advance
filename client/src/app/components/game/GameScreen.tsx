@@ -116,12 +116,10 @@ export function GameScreen() {
   const showReshuffleButtonClient =
     serverPhase === "open_window" &&
     currentTurn === 1 &&
-    !openMode &&
-    !doubleOpenMode;
+    isMyTurn;
 
   const canRequestReshuffleClient =
     showReshuffleButtonClient &&
-    isMyTurn &&
     (relaxReshuffleRule ? true : myPlayerIndex !== currentBatterIndex) &&
     (relaxReshuffleRule ? true : !hasFaceCardsClient);
 
@@ -482,8 +480,11 @@ function MyHand({
   }
 
   return (
-    <div className="flex justify-start px-2 overflow-x-auto pb-1 sm:justify-center">
-      <div className="flex w-max max-w-none flex-nowrap justify-start gap-1 sm:max-w-full sm:flex-wrap sm:justify-center">
+    <div data-testid="my-hand-scroll" className="flex justify-center overflow-x-hidden px-2 pb-1 sm:overflow-x-auto">
+      <div
+        data-testid="my-hand-layout"
+        className="grid w-full grid-cols-4 gap-1 sm:w-max sm:max-w-none sm:flex sm:flex-nowrap sm:justify-center"
+      >
         {hand.map((card) => {
           const playable = isCardPlayable(card);
           const selected = selectedCardId === card.id;
