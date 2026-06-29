@@ -102,7 +102,7 @@ function renderGameScreen(overrides: Partial<GameState> = {}) {
 }
 
 describe('GameScreen hand layout', () => {
-  test('uses a mobile grid and keeps the desktop row layout classes', () => {
+  test('uses flex-wrap on mobile and flex-nowrap for larger screens', () => {
     renderGameScreen();
 
     const handScroll = screen.getByTestId('my-hand-scroll');
@@ -110,11 +110,9 @@ describe('GameScreen hand layout', () => {
 
     expect(handScroll.className).toContain('flex');
     expect(handScroll.className).toContain('justify-center');
-    expect(handScroll.className).toContain('overflow-x-hidden');
-    expect(handScroll.className).toContain('sm:overflow-x-auto');
-    expect(handLayout.className).toContain('grid');
-    expect(handLayout.className).toContain('grid-cols-4');
-    expect(handLayout.className).toContain('sm:flex');
+    expect(handLayout.className).toContain('flex');
+    expect(handLayout.className).toContain('flex-wrap');
+    expect(handLayout.className).toContain('justify-center');
     expect(handLayout.className).toContain('sm:flex-nowrap');
   });
 });

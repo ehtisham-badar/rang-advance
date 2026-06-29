@@ -471,6 +471,19 @@ function MyHand({
   isCardPlayable: (card: Card) => boolean;
   onCardClick: (card: Card) => void;
 }) {
+  // Choose card size based on viewport width:
+  // – phones & tablets (< 1024px): "sm" cards (40×56 px)
+  // – desktop (≥ 1024px):          "md" cards (56×80 px)
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== "undefined" ? window.innerWidth >= 1024 : true,
+  );
+
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   if (hand.length === 0) {
     return (
       <div className="flex justify-center">
@@ -480,10 +493,10 @@ function MyHand({
   }
 
   return (
-    <div data-testid="my-hand-scroll" className="flex justify-center overflow-x-hidden px-2 pb-1 sm:overflow-x-auto">
+    <div data-testid="my-hand-scroll" className="flex justify-center px-2 pb-1">
       <div
         data-testid="my-hand-layout"
-        className="grid w-full grid-cols-4 gap-1 sm:w-max sm:max-w-none sm:flex sm:flex-nowrap sm:justify-center"
+        className="flex flex-wrap justify-center gap-1 sm:flex-nowrap"
       >
         {hand.map((card) => {
           const playable = isCardPlayable(card);
@@ -495,7 +508,7 @@ function MyHand({
               onClick={() => onCardClick(card)}
               selected={selected}
               playable={isMyTurn && playable}
-              size="md"
+              size={isDesktop ? "md" : "sm"}
             />
           );
         })}
