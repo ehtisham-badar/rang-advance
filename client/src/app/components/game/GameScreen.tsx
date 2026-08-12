@@ -113,6 +113,16 @@ export function GameScreen() {
 
   const hasFaceCardsClient = myHand.some((c) => c.value === 11 || c.value === 12 || c.value === 13);
 
+  const batterTeamIndex = currentBatterIndex % 2;
+  const opposingOpenDeclared =
+    openMode &&
+    !doubleOpenMode &&
+    openDeclaredByTeam !== null &&
+    openDeclaredByTeam !== batterTeamIndex;
+
+  const isBatterBlockedFromReshuffle =
+    myPlayerIndex === currentBatterIndex && !opposingOpenDeclared;
+
   const showReshuffleButtonClient =
     serverPhase === "open_window" &&
     currentTurn === 1 &&
@@ -120,7 +130,7 @@ export function GameScreen() {
 
   const canRequestReshuffleClient =
     showReshuffleButtonClient &&
-    (relaxReshuffleRule ? true : myPlayerIndex !== currentBatterIndex) &&
+    (relaxReshuffleRule ? true : !isBatterBlockedFromReshuffle) &&
     (relaxReshuffleRule ? true : !hasFaceCardsClient);
 
   const reshuffleDisabledReason =
@@ -128,7 +138,7 @@ export function GameScreen() {
       ? null
       : !isMyTurn
         ? "Not your turn"
-        : !relaxReshuffleRule && myPlayerIndex === currentBatterIndex
+        : !relaxReshuffleRule && isBatterBlockedFromReshuffle
           ? "Batter cannot reshuffle"
           : !relaxReshuffleRule && hasFaceCardsClient
             ? "Need no J / Q / K to reshuffle"

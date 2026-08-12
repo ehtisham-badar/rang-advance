@@ -58,4 +58,11 @@ describe('trumpEngine', () => {
         expect(room.trumpSuit).toBe('S');
         expect(room.hiddenCard).toBe(null);
     });
+
+    test('shouldRevealTrump() returns true for the batter on turn 13 when trump is hidden', () => {
+        const room = makeRoom();
+        room.currentTurn = 13;
+        const batter = room.players[0];
+        expect(shouldRevealTrump(room, batter.id)).toBe(true);
+    });
 });

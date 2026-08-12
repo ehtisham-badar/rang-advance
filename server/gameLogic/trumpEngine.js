@@ -2,11 +2,16 @@ import { getBowlingTeamIndex } from '../rooms.js';
 
 function shouldRevealTrump(room, playerId) {
     if (room.trumpRevealed) return false;
-    if (!room.activeSuit) return false;
     if (!room.hiddenCard) return false;
 
     const player = room.players.find((p) => p.id === playerId);
     if (!player) return false;
+
+    if (room.currentTurn === 13 && player.playerIndex === room.currentBatterIndex) {
+        return true;
+    }
+
+    if (!room.activeSuit) return false;
     const bowlingTeam = getBowlingTeamIndex(room);
     if (player.teamIndex !== bowlingTeam) return false;
 

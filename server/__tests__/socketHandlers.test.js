@@ -437,4 +437,46 @@ describe('socketHandlers trump reveal timing', () => {
             reason: 'tricks_completed',
         });
     });
+
+    test('reveals trump on turn 13 when next turn is the batter', () => {
+        const io = createMockIo();
+
+        const { roomCode } = createRoom('Host', 's-host');
+        joinRoom(roomCode, 'P2', 's-p2', null);
+        joinRoom(roomCode, 'P3', 's-p3', null);
+        joinRoom(roomCode, 'P4', 's-p4', null);
+        const room = getRoom(roomCode);
+
+        room.phase = 'playing';
+        room.currentTurn = 13;
+        room.currentBatterIndex = 0;
+        room.currentPlayerIndex = 3;
+        room.activeSuit = 'S';
+        room.trumpRevealed = false;
+        room.trumpSuit = null;
+        room.hiddenCard = { suit: 'H', value: 7, id: 'H-7' };
+        room.trumpRevealedThisTrick = false;
+
+        room.players[0].hand = [];
+        room.players[1].hand = [];
+        room.players[2].hand = [];
+        room.players[3].hand = [{ suit: 'S', value: 11, id: 'S-11' }];
+
+        room.trickCards = [
+            { playerId: room.players[0].id, card: null, hidden: false, dead: false, playedAfterTrumpReveal: false },
+            { playerId: room.players[1].id, card: null, hidden: false, dead: false, playedAfterTrumpReveal: false },
+            { playerId: room.players[2].id, card: null, hidden: false, dead: false, playedAfterTrumpReveal: false },
+            { playerId: room.players[3].id, card: null, hidden: false, dead: false, playedAfterTrumpReveal: false },
+        ];
+
+        const socket = createMockSocket('s-p4');
+        registerSocketHandlers(io, socket);
+
+        socket.getHandler('play_card')({ roomCode, cardId: 'S-11' });
+
+        expect(room.trumpRevealed).toBe(true);
+        expect(room.trumpSuit).toBe('H');
+        expect(room.hiddenCard).toBe(null);
+        expect(room.players[0].hand.find((c) => c.id === 'H-7')).toBeTruthy();
+    });
 });

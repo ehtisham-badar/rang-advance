@@ -3,7 +3,7 @@ import { createRoom, joinRoom, getRoom, findPlayerBySocket, findPlayerById, cons
 import { createDeck, shuffle } from './gameLogic/deck.js';
 import { runTossStep } from './gameLogic/toss.js';
 import { validatePlay, resolveTrick, checkConsecutiveWins, resetConsecutiveState } from './gameLogic/turnEngine.js';
-import { revealTrump } from './gameLogic/trumpEngine.js';
+import { revealTrump, shouldRevealTrump } from './gameLogic/trumpEngine.js';
 import { canDeclareOpen, executeOpen, canDeclareDoubleOpen, executeDoubleOpen } from './gameLogic/openMode.js';
 import { calculatePoints } from './gameLogic/scoring.js';
 import { getNextBatterIndex, isGameOver } from './gameLogic/rotation.js';
@@ -284,7 +284,16 @@ function isReshuffleWindowOpen(room) {
 function canReshufflePlayer(player, room) {
     const relaxReshuffleRule = process.env.RANG_DEV_ALLOW_RESHUFFLE === '1';
     if (!relaxReshuffleRule) {
-        if (player.playerIndex === room.currentBatterIndex) return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
+        if (player.playerIndex === room.currentBatterIndex) {
+            const batterTeam = room.currentBatterIndex % 2;
+            const opposingOpenDeclared = room.openMode
+                && !room.doubleOpenMode
+                && room.openDeclaredByTeam !== null
+                && room.openDeclaredByTeam !== batterTeam;
+            if (!opposingOpenDeclared) {
+                return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
+            }
+        }
         const hasFace = player.hand.some((c) => c.value === 11 || c.value === 12 || c.value === 13);
         if (hasFace) return { ok: false, code: 'RESHUFFLE_NOT_ELIGIBLE' };
         // Players can only reshuffle on their turn
@@ -648,10 +657,8 @@ function registerSocketHandlers(io, socket) {
         room.currentPlayerIndex = (room.currentPlayerIndex + 1) % 4;
 
         const nextPlayer = room.players[room.currentPlayerIndex];
-        if (playedCardsInTrick < 4 && !room.trumpRevealed && room.activeSuit && nextPlayer) {
-            const bowlingTeam = getBowlingTeamIndex(room);
-            const hasActiveSuit = nextPlayer.hand.some((c) => c.suit === room.activeSuit);
-            if (nextPlayer.teamIndex === bowlingTeam && !hasActiveSuit) {
+        if (playedCardsInTrick < 4 && !room.trumpRevealed && nextPlayer) {
+            if (shouldRevealTrump(room, nextPlayer.id)) {
                 const hidden = revealTrump(room);
                 if (hidden) {
                     room.trumpRevealedThisTrick = true;
@@ -716,6 +723,16 @@ function registerSocketHandlers(io, socket) {
         room.activeSuit = null;
         initTrickCards(room);
         room.currentPlayerIndex = trick.winnerPlayerIndex;
+
+        const leadPlayer = room.players[room.currentPlayerIndex];
+        if (leadPlayer && !room.trumpRevealed && shouldRevealTrump(room, leadPlayer.id)) {
+            const hidden = revealTrump(room);
+            if (hidden) {
+                room.trumpRevealedThisTrick = true;
+                markDeadCardsAfterTrumpReveal(room);
+                emitTrumpRevealed(io, room, hidden);
+            }
+        }
 
         if (room.phase === 'open_window' && room.currentTurn > 1) room.phase = 'playing';
         emitGameState(io, room);

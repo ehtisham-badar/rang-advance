@@ -122,4 +122,38 @@ describe('GameScreen reshuffle UI', () => {
 
     expect(mocks.requestReshuffleMock).toHaveBeenCalledTimes(1);
   });
+  test('enables reshuffle for batter when opposing team declared open and batter has no face cards', () => {
+    renderGameScreen({
+      myPlayerId: 'p0',
+      currentPlayerIndex: 0,
+      currentBatterIndex: 0,
+      openMode: true,
+      doubleOpenMode: false,
+      openDeclaredByTeam: 1,
+      openDeclaredByPlayerId: 'p1',
+    });
+
+    const button = screen.getByRole('button', { name: /request reshuffle/i });
+
+    expect(button).toBeEnabled();
+
+    fireEvent.click(button);
+
+    expect(mocks.requestReshuffleMock).toHaveBeenCalledTimes(1);
+  });
+
+  test('disables reshuffle for batter during double-open even if opposing team declared open', () => {
+    renderGameScreen({
+      myPlayerId: 'p0',
+      currentPlayerIndex: 0,
+      currentBatterIndex: 0,
+      openMode: true,
+      doubleOpenMode: true,
+      openDeclaredByTeam: 1,
+      openDeclaredByPlayerId: 'p1',
+    });
+
+    expect(screen.getByRole('button', { name: /request reshuffle/i })).toBeDisabled();
+    expect(screen.getByText('Batter cannot reshuffle')).toBeInTheDocument();
+  });
 });
